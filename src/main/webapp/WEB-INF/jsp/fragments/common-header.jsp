@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="<c:url value='/css/style.css' />" rel="stylesheet" type="text/css" media="all"/>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery.min.js' />"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $(".dropdown img.flag").addClass("flagvisibility");
@@ -43,15 +43,15 @@
     });
 </script>
 <!-- start menu -->
-<link href="css/megamenu.css" rel="stylesheet" type="text/css" media="all"/>
-<script type="text/javascript" src="js/megamenu.js"></script>
+<link href="<c:url value='/css/megamenu.css' />" rel="stylesheet" type="text/css" media="all"/>
+<script type="text/javascript" src="<c:url value='/js/megamenu.js' />"></script>
 <script>$(document).ready(function () {
     $(".megamenu").megamenu();
 });</script>
 <!-- end menu -->
 <!-- top scrolling -->
-<script type="text/javascript" src="js/move-top.js"></script>
-<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="<c:url value='/js/move-top.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/easing.js' />"></script>
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
         $(".scroll").click(function (event) {

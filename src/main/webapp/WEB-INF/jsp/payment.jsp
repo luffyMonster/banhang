@@ -112,7 +112,7 @@
 </div>
 
 <%@include file="fragments/footer.jsp" %>
-<script src="js/easyResponsiveTabs.js"></script>
+<script src="<c:url value='/js/easyResponsiveTabs.js' />"></script>
 <script>
     $(document).ready(function () {
         //Horizontal Tab
@@ -133,7 +133,7 @@
 </script>
 
 <!-- credit-card -->
-<script src="js/creditly.js"></script>
+<script src="<c:url value='js/creditly.js' />"></script>
 <link rel="stylesheet" href="css/creditly.css" type="text/css" media="all"/>
 
 <script>

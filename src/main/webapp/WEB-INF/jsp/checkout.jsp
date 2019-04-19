@@ -13,7 +13,7 @@
 <head>
     <title>Free Adidas Website</title>
     <%@include file="fragments/common-header.jsp" %>
-    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="<c:url value='/fonts/material-icon/css/material-design-iconic-font.min.css' />">
 </head>
 <body>
 <%@include file="fragments/header-top.jsp" %>
@@ -36,7 +36,7 @@
                     <span>3 Products</span>
                 </h3>
                 <div class="table-responsive">
-                    <form action="/checkout" method="post">
+                    <form action="<c:url value="/cart/checkout"/>" method="post">
                         <table class="timetable_sub">
                             <thead>
                             <tr>
@@ -121,7 +121,7 @@
                     <div class="login-title">
                         <h4 class="title">Add new details</h4>
                         <div class="comments-area">
-                            <springForm:form action="/checkout" method="post" modelAttribute="checkOutBean">
+                            <springForm:form action="/cart/checkout" method="post" modelAttribute="checkOutBean">
                                 <p>
                                     <label>Full name</label>
                                     <span>*</span>

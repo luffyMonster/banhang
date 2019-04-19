@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface ProductService {
     Page<Product> findAll(Pageable pageable);
+
+    Product findById(Long id);
 }

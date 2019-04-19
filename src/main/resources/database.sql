@@ -1,6 +1,6 @@
 CREATE TABLE USER
 (
-  USER_ID        INT          AUTO-INCREMENT PRIMARY KEY,
+  USER_ID        INT          AUTO_INCREMENT PRIMARY KEY,
   NAME      VARCHAR(60)  NOT NULL,
   ACTIVE    TINYINT(1)   NOT NULL,
   PASSWORD  VARCHAR(255) NOT NULL,
@@ -66,3 +66,13 @@ INSERT INTO PRODUCT (name, description, quantity, price, IMAGE_URL)
 VALUES ('Leather Wallets', 'Imported Leather Wallets from AUS', 1000, 500.00, "images/pic7.jpg");
 INSERT INTO PRODUCT (name, description, quantity, price, IMAGE_URL)
 VALUES ('Camera', 'Imported Canon camera from USA', 10, 85000.00, "images/pic8.jpg");
+
+
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+                          `categoryId` bigint(20) NOT NULL,
+                          `categoryName` varchar(255) DEFAULT NULL,
+                          `categoryUrl` varchar(255) DEFAULT NULL,
+                          `categoryStatus` bit(1) NOT NULL,
+                          PRIMARY KEY (`categoryId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

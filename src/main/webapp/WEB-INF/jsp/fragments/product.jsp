@@ -1,19 +1,12 @@
 <jsp:useBean id="prod" type="com.edu.banhang.model.Product"/>
-<%--
-  Created by IntelliJ IDEA.
-  User: To Nghia
-  Date: 4/14/2019
-  Time: 4:56 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="col_1_of_3 span_1_of_3"><a href="single.html">
+<div class="col_1_of_3 span_1_of_3"><a href="<c:url value='/product/${prod.id}' />">
     <div class="view view-fifth">
         <div class="top_box">
             <h3 class="m_1">${prod.name}</h3>
             <p class="m_2">${prod.description}</p>
             <div class="grid_img">
-                <div class="css3"><img src="${prod.imageUrl}" alt="${prod.name}"/></div>
+                <div class="css3"><img src="<c:url value='${prod.imageUrl}' />" alt="${prod.name}"/></div>
                 <div class="mask">
                     <div class="info">Quick View</div>
                 </div>
@@ -36,10 +29,10 @@
 		    	      </span>
     <ul class="list">
         <li>
-            <img src="images/plus.png" alt=""/>
+            <img src="<c:url value='/images/plus.png' />" alt=""/>
             <ul class="icon1 sub-icon1 profile_img">
                 <li>
-                    <a class="active-icon c1" href="#">Add To Bag </a>
+                    <a class="active-icon c1" href="<c:url value='/cart/add/${prod.id}' /> ">Add To Bag </a>
                 </li>
             </ul>
         </li>
