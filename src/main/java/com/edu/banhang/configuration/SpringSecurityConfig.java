@@ -58,7 +58,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/cart/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
@@ -69,8 +69,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").and().exceptionHandling()
                 .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-                .accessDeniedPage("/access-denied");
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
     @Bean

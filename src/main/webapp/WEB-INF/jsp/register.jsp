@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <%@include file="fragments/common-header.jsp"%>
-    <link href="css/user.css" rel="stylesheet" type="text/css" media="all"/>
-    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link href="<c:url value='/css/user.css' />" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<c:url value='fonts/material-icon/css/material-design-iconic-font.min.css' />">
 </head>
 <body>
 <%@include file="fragments/header-top.jsp" %>
@@ -28,7 +28,8 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
-                        <s:form method="POST" action="/register" modelAttribute="user" class="register-form" id="register-form">
+                        <c:url value="/register" var="registerUrl" />
+                        <s:form method="POST" action="${registerUrl}" modelAttribute="user" class="register-form" id="register-form">
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <s:input type="text" path="name" id="name" placeholder="Your Name"/>
@@ -60,7 +61,7 @@
                         </s:form>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="images/signup-image.jpg" alt="sing up image"></figure>
+                        <figure><img src="<c:url value='/images/signup-image.jpg' />" alt="sing up image"></figure>
                         <a href="<c:url value='/login' /> " class="signup-image-link">I am already member?</a>
                     </div>
                 </div>

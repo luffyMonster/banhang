@@ -13,4 +13,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/**");
     }
+
 }

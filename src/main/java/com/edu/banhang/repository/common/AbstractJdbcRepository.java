@@ -2,15 +2,24 @@ package com.edu.banhang.repository.common;
 
 import com.edu.banhang.model.BaseModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -29,6 +38,12 @@ public abstract class AbstractJdbcRepository<T extends BaseModel, ID extends Ser
     private String selectById;
     private String countQuery;
 
+    public AbstractJdbcRepository(){
+        initialize();
+        afterPropertiesSet();
+    }
+
+    public abstract void initialize();
     /**
      * Must be call on child after properties set
      */
@@ -79,7 +94,11 @@ public abstract class AbstractJdbcRepository<T extends BaseModel, ID extends Ser
 
     @Override
     public T findOne(ID arg0) {
-        return jdbcTemplate.queryForObject(this.selectById, new Object[]{arg0}, this.rowMapper);
+        try {
+            return jdbcTemplate.queryForObject(this.selectById, new Object[]{arg0}, this.rowMapper);
+        } catch (IncorrectResultSizeDataAccessException ex) {
+            return null;
+        }
     }
 
     @Override
@@ -108,24 +127,29 @@ public abstract class AbstractJdbcRepository<T extends BaseModel, ID extends Ser
 
             jdbcTemplate.update(updateQuery, obj);
         } else {//Case insert
-            //For autoincrement field
-            columns.remove(idColumn);
-            String insertQuery = String.format("insert into %s (", this.tableName);
-            Object[] obj = new Object[columns.size()];
-            int i = 0;
-            String separator = "";
-            String paramsString = "(";
-            for (Map.Entry<String, Object> e : columns.entrySet()) {
-                obj[i++] = e.getValue();
-                paramsString += separator + " ?";
-                insertQuery += separator + e.getKey();
-                separator = ", ";
-            }
-            insertQuery += " ) values " + paramsString + ")";
-            jdbcTemplate.update(insertQuery, obj);
+            SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+            simpleJdbcInsert.setGeneratedKeyName(this.idColumn);
+            simpleJdbcInsert.setTableName(this.tableName);
+            Number id = simpleJdbcInsert.executeAndReturnKey(columns);
+            arg0.setId(id.longValue());
         }
 
         return arg0;
+    }
+
+    public List<T> findBy(Map<String, Object> columns) {
+        String selectQuery = String.format("select * from %s where ", this.tableName);
+
+        Object[] obj = new Object[columns.size()];
+        int i = 0;
+
+        String separator = "";
+        for (Map.Entry<String, Object> e : columns.entrySet()) {
+            obj[i++] = e.getValue();
+            selectQuery += separator + e.getKey() + " = ? ";
+            separator = ", ";
+        }
+        return jdbcTemplate.query(selectQuery, obj, this.rowMapper);
     }
 
     @Override

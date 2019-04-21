@@ -1,10 +1,17 @@
 package com.edu.banhang.model;
 
-public class CheckOutBean {
+import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
+
+public class CheckOutBean implements Serializable {
+    @NotEmpty(message = "*Please provide your full name")
     private String fullName;
+
+    @NotEmpty(message = "*Please provide your phone number")
     private String phoneNumber;
-    private String city;
-    private String addressDetail;
+
+    @NotEmpty(message = "*Please provide your address")
+    private String address;
 
     public String getFullName() {
         return fullName;
@@ -22,19 +29,11 @@ public class CheckOutBean {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCity() {
-        return city;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getAddressDetail() {
-        return addressDetail;
-    }
-
-    public void setAddressDetail(String addressDetail) {
-        this.addressDetail = addressDetail;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

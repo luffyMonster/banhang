@@ -16,8 +16,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <%@include file="fragments/common-header.jsp"%>
-    <link href="css/user.css" rel="stylesheet" type="text/css" media="all"/>
-    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link href="<c:url value='/css/user.css' />" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<c:url value='/fonts/material-icon/css/material-design-iconic-font.min.css' />">
 </head>
 <body>
 <%@include file="fragments/header-top.jsp" %>
@@ -34,13 +34,13 @@
             </c:if>
             <div class="signin-content">
                 <div class="signin-image">
-                    <figure><img src="images/signin-image.jpg" alt="sing up image"></figure>
+                    <figure><img src="<c:url value='/images/signin-image.jpg' />" alt="sing up image"></figure>
                     <a href="<c:url value='/register' />" class="signup-image-link">Create an account</a>
                 </div>
 
                 <div class="signin-form">
                     <h2 class="form-title">Sign in</h2>
-                    <form method="POST" action="/login" class="register-form" id="login-form">
+                    <form method="POST" action="<c:url value='/login' />" class="register-form" id="login-form">
                         <div class="form-group">
                             <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <input type="text" name="username" id="username" placeholder="UserName"/>

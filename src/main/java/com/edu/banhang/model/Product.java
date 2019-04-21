@@ -9,6 +9,15 @@ import java.math.BigDecimal;
 
 public class Product extends BaseModel {
 
+    public Product() {
+    }
+
+    public Product(Long id) {
+        this.id = id;
+    }
+
+    private Category category;
+
     @Length(min = 3, message = "*Name must have at least 5 characters")
     private String name;
 
@@ -63,6 +72,14 @@ public class Product extends BaseModel {
         this.imageUrl = imageUrl;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,6 +92,6 @@ public class Product extends BaseModel {
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 }

@@ -19,7 +19,8 @@ import static com.edu.banhang.constant.DBConstants.*;
 public class JDBCRoleRepository extends AbstractJdbcRepository<Role, Long> implements RoleRepository {
 
 
-    public JDBCRoleRepository() {
+    @Override
+    public void initialize() {
         this.rowMapper = new RoleMapper();
         this.tableName = ROLE;
         this.idColumn = ROLE_ID;

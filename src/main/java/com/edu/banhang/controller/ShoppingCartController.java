@@ -1,23 +1,23 @@
 package com.edu.banhang.controller;
 
-import com.edu.banhang.model.Cart;
-import com.edu.banhang.model.CheckOutBean;
-import com.edu.banhang.model.Product;
+import com.edu.banhang.model.*;
 import com.edu.banhang.service.ProductService;
+import com.edu.banhang.service.ReceiptItemService;
+import com.edu.banhang.service.ReceiptService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,22 +28,58 @@ public class ShoppingCartController {
 
     ProductService productService;
 
+    ReceiptService receiptService;
+
+    ReceiptItemService receiptItemService;
+
     @Autowired
-    public ShoppingCartController(ProductService productService) {
+    public ShoppingCartController(ProductService productService, ReceiptService receiptService, ReceiptItemService receiptItemService) {
         this.productService = productService;
+        this.receiptService = receiptService;
+        this.receiptItemService = receiptItemService;
     }
 
     @GetMapping("/checkout")
-    public ModelAndView checkOutStep1() {
+    public ModelAndView checkOutStep1(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("checkout");
         modelAndView.addObject("checkOutBean", new CheckOutBean());
         return modelAndView;
     }
 
-    @PostMapping("/checkout")
-    public String checkOutStep2(@Valid CheckOutBean checkOutBean) {
-        return "payment";
+    @RequestMapping(value = "/checkout", method = RequestMethod.POST)
+    public String checkOutStep2(ModelMap mm, HttpSession session, @Valid CheckOutBean checkOutBean, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "checkout";
+        }
+        HashMap<Long, Cart> cartItems = (HashMap<Long, Cart>) session.getAttribute("myCartItems");
+        if (cartItems == null || cartItems.isEmpty()) {
+            mm.addAttribute("errorMessage", "Can not check out when your cart is empty.");
+            return "redirect:/cart";
+        }
+        Receipt receipt = new Receipt();
+        receipt.setReceiptName(checkOutBean.getFullName());
+        receipt.setReceiptAddress(checkOutBean.getAddress());
+        receipt.setPhoneNumber(checkOutBean.getPhoneNumber());
+        receipt.setReceiptDate(new Timestamp(new Date().getTime()));
+        receipt.setReceiptStatus(false);
+        receiptService.save(receipt);
+
+        for (Map.Entry<Long, Cart> entry : cartItems.entrySet()) {
+            ReceiptItem receiptItem = new ReceiptItem();
+            receiptItem.setReceipt(receipt);
+            receiptItem.setProduct(entry.getValue().getProduct());
+            receiptItem.setReceiptItemPrice(entry.getValue().getProduct().getPrice());
+            receiptItem.setReceiptItemQuantity(entry.getValue().getQuantity());
+            receiptItemService.save(receiptItem);
+        }
+        cartItems = new HashMap<>();
+        session.setAttribute("myCartItems", cartItems);
+        session.setAttribute("myCartTotal", 0);
+        session.setAttribute("myCartNum", 0);
+
+        mm.addAttribute("successMessage", "Your order has been successfully processed! Your products will arrive at your destination as soon as possible");
+        return "cart";
     }
 
     @GetMapping("")
@@ -82,7 +118,7 @@ public class ShoppingCartController {
         session.setAttribute("myCartItems", cartItems);
         session.setAttribute("myCartTotal", totalPrice(cartItems));
         session.setAttribute("myCartNum", cartItems.size());
-        return "cart";
+        return "redirect:/cart";
     }
 
     @GetMapping("/remove/{productId}")

@@ -15,6 +15,12 @@
 <div class="main">
     <div class="login">
         <div class="wrap">
+            <c:if test="${successMessage != null}">
+                <div class="alert alert-success">${successMessage}</div>
+            </c:if>
+            <c:if test="${errorMessage != null}">
+                <div class="alert alert-error">${errorMessage}</div>
+            </c:if>
             <h2 class="form-title">Shopping cart
                 <span class="heading-style">
 					<i></i>
@@ -31,7 +37,7 @@
                         here</a> to continue shopping</p>
                 </c:if>
                 <c:if test="${sessionScope.myCartNum != null && sessionScope.myCartNum > 0}">
-                    <h3>Your shopping cart contains:
+                    <h3 style="margin-bottom: 5px">Your shopping cart contains:
                         <span>${sessionScope.myCartNum} Products</span>
                     </h3>
                     <div class="table-responsive">
@@ -65,7 +71,7 @@
                                     <td class="invert">${entry.value.product.price*entry.value.quantity}</td>
                                     <td class="invert">
                                         <div class="rem">
-                                            <a href="<c:url value='/cart/remove/${entry.value.product.id}' /> ">
+                                            <a class="color-black" href="<c:url value='/cart/remove/${entry.value.product.id}' /> ">
                                                 <i class="zmdi zmdi-hc-2x zmdi-close"></i>
                                             </a>
                                         </div>
@@ -76,17 +82,19 @@
                         </table>
                     </div>
                     <div class="total" style="margin-top: 20px">
-                        <div style="float: right">Total: $<c:out value="${sessionScope.myCartTotal}"/></div>
+                        <div style="float: right; font-weight: bold">Total: $<c:out value="${sessionScope.myCartTotal}"/></div>
                         <div class="clear"></div>
                     </div>
                 </c:if>
             </div>
             <div class="checkout-left">
+                <c:if test="${sessionScope.myCartNum != null && sessionScope.myCartNum > 0}">
                 <div class="col_1_of_login span_1_of_login">
                     <a href="<c:url value='/cart/checkout' />" class="btn btn1" STYLE="float: left"> Checkout</a>
                 </div>
+                </c:if>
                 <div class="col_1_of_login span_1_of_login">
-                    <a href="<c:url value='/' />" class="btn btn1" style="margin-right: 0"><i class="zmdi zmdi-hc-1x zmdi-chevron-left"></i>
+                    <a href="<c:url value='/' />" class="btn btn1" style="margin-right: 0; <c:if test='${sessionScope.myCartNum == null || sessionScope.myCartNum == 0}'>float: left</c:if>"><i class="zmdi zmdi-hc-1x zmdi-chevron-left"></i>
                         Continue shopping</a>
                 </div>
                 <div class="clear"></div>

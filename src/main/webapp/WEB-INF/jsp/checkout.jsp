@@ -32,11 +32,16 @@
 
             <!-- //tittle heading -->
             <div class="checkout-right">
-                <h3>Your shopping cart contains:
-                    <span>3 Products</span>
-                </h3>
-                <div class="table-responsive">
-                    <form action="<c:url value="/cart/checkout"/>" method="post">
+                <c:if test="${sessionScope.myCartNum == null || sessionScope.myCartNum == 0}">
+                    <h4 class="title">Shopping cart is empty</h4>
+                    <p class="cart">You have no items in your shopping cart.<br>Click<a href="<c:url value='/' /> ">
+                        here</a> to continue shopping</p>
+                </c:if>
+                <c:if test="${sessionScope.myCartNum != null && sessionScope.myCartNum > 0}">
+                    <h3>Your shopping cart contains:
+                        <span>${sessionScope.myCartNum} Products</span>
+                    </h3>
+                    <div class="table-responsive">
                         <table class="timetable_sub">
                             <thead>
                             <tr>
@@ -46,101 +51,62 @@
                                 <th>Product Name</th>
 
                                 <th>Price</th>
-                                <th>Remove</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="rem1">
-                                <td class="invert">1</td>
-                                <td class="invert-image">
-                                    <a href="single2.html">
-                                        <img src="images/pic1.jpg" alt=" " class="img-responsive">
-                                    </a>
-                                </td>
-                                <td class="invert">
-                                    <div class="quantity">
-                                        <input name="qty1" type="number" value="1" min="1" style="max-width: 45px"/>
-                                    </div>
-                                </td>
-                                <td class="invert">Spotzero Spin Mop</td>
-                                <td class="invert">$888.00</td>
-                                <td class="invert">
-                                    <div class="rem">
-                                        <i class="zmdi zmdi-hc-3x zmdi-close"></i>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="rem2">
-                                <td class="invert">2</td>
-                                <td class="invert-image">
-                                    <a href="single2.html">
-                                        <img src="images/pic2.jpg" alt=" " class="img-responsive">
-                                    </a>
-                                </td>
-                                <td class="invert">
-                                    <div class="quantity">
-                                        <input name="qty1" type="number" value="1" style="max-width: 45px"/>
-                                    </div>
-                                </td>
-                                <td class="invert">Fair & Lovely, 80 g</td>
-                                <td class="invert">$121.60</td>
-                                <td class="invert">
-                                    <div class="rem">
-                                        <i class="zmdi zmdi-hc-3x zmdi-close"></i>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="rem3">
-                                <td class="invert">3</td>
-                                <td class="invert-image">
-                                    <a href="single.html">
-                                        <img src="images/pic3.jpg" alt=" " class="img-responsive">
-                                    </a>
-                                </td>
-                                <td class="invert">
-                                    <div class="quantity">
-                                        <input name="qty1" type="number" value="1" style="max-width: 45px"/>
-                                    </div>
-                                </td>
-                                <td class="invert">Sprite, 2.25L (Pack of 2)</td>
-                                <td class="invert">$180.00</td>
-                                <td class="invert">
-                                    <div class="rem">
-                                        <i class="zmdi zmdi-hc-3x zmdi-close"></i>
-                                    </div>
-                                </td>
-                            </tr>
+                            <c:forEach items="${sessionScope.myCartItems}" var="entry" varStatus="loop">
+                                <tr class="rem${loop.index}">
+                                    <td class="invert">1</td>
+                                    <td class="invert-image">
+                                        <a href="<c:url value='/product/${entry.value.product.id}' />">
+                                            <img src="<c:url value='${entry.value.product.imageUrl}' />" alt=" " class="img-responsive">
+                                        </a>
+                                    </td>
+                                    <td class="invert">
+                                        <div class="quantity">
+                                                ${entry.value.quantity}
+                                        </div>
+                                    </td>
+                                    <td class="invert">${entry.value.product.name}</td>
+                                    <td class="invert">${entry.value.product.price*entry.value.quantity}</td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
-                    </form>
-                </div>
+                    </div>
+                    <div class="total" style="margin-top: 20px">
+                        <div style="float: right; font-weight: bold">Total: $<c:out value="${sessionScope.myCartTotal}"/></div>
+                        <div class="clear"></div>
+                    </div>
+                </c:if>
             </div>
 
+
             <div class="checkout-left">
+                <c:if test="${sessionScope.myCartNum != null && sessionScope.myCartNum > 0}">
                 <div class="col_1_of_login span_1_of_login">
                     <div class="login-title">
                         <h4 class="title">Add new details</h4>
                         <div class="comments-area">
-                            <springForm:form action="/cart/checkout" method="post" modelAttribute="checkOutBean">
+                            <c:url value="/cart/checkout" var="checkOutUrl" />
+                            <springForm:form method="POST" action="${checkOutUrl}" modelAttribute="checkOutBean" >
                                 <p>
                                     <label>Full name</label>
                                     <span>*</span>
-                                    <springForm:input path="fullName" type="text" value="" />
+                                    <springForm:input path="fullName" type="text"  />
+                                    <springForm:errors cssClass="error" path="fullName"/>
                                 </p>
                                 <p>
                                     <label>Phone number</label>
                                     <span>*</span>
-                                    <springForm:input path="phoneNumber" type="text" value="" />
+                                    <springForm:input path="phoneNumber" type="text"  />
+                                    <springForm:errors cssClass="error" path="phoneNumber"/>
                                 </p>
                                 <p>
-                                    <label>City/Province</label>
+                                    <label>Address </label>
                                     <span>*</span>
-                                    <springForm:input path="city" type="text" value=""/>
-                                </p>
-                                <p>
-                                    <label>Address detail</label>
-                                    <span>*</span>
-                                    <springForm:input path="addressDetail" type="text" value="" />
+                                    <springForm:input path="address" type="text"  />
+                                    <springForm:errors cssClass="error" path="address"/>
                                 </p>
                                 <p>
                                     <input style="float: left" type="submit" value="Next step: Payment method">
@@ -149,6 +115,7 @@
                         </div>
                     </div>
                 </div>
+                </c:if>
                 <div class="col_1_of_login span_1_of_login">
                     <a href="<c:url value='/' />" class="btn btn1"><i class="zmdi zmdi-hc-1x zmdi-chevron-left"></i>  Continue shopping</a>
                 </div>

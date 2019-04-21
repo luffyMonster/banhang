@@ -2168,7 +2168,22 @@ p.cart a:hover {
     float: left;
     margin: 1% 0 1% 3.6%;
 }
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+}
 
+.color-black{
+    color: #212121;
+}
+.color-black:hover{
+    color: #211f11;
+}
 #toTop {
     display: none;
     text-decoration: none;

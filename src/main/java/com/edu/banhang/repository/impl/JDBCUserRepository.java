@@ -24,7 +24,8 @@ public class JDBCUserRepository extends AbstractJdbcRepository<User, Long> imple
     @Autowired
     RoleRepository roleRepository;
 
-    public JDBCUserRepository() {
+    @Override
+    public void initialize() {
         this.rowMapper = new UserMapper();
         this.tableName = USER;
         this.idColumn = USER_ID;

@@ -22,7 +22,7 @@
     </div>
     <div class="copy">
         <div class="wrap">
-            <p>© All rights reserved</p>
+            <p>© All rights reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a></p>
         </div>
     </div>
 </div>
