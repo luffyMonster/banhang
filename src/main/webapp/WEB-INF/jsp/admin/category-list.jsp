@@ -18,7 +18,7 @@
 
             <div class="inner-block">
                 <div class="inbox">
-                    <h2>Product Manage</h2>
+                    <h2>Category Manager</h2>
                     <div class="col-md-12 mailbox-content  tab-content tab-content-in">
                         <div class="tab-pane active text-style" id="tab1">
                             <div class="mailbox-border">
@@ -44,13 +44,13 @@
                                 <table class="table tab-border">
                                     <tbody>
                                     <tr>
-                                        <td class="hidden-xs">
+                                        <td class="hidden-xs" style="width: 200px">
                                             <b>Category</b>
                                         </td>
                                         <td class="hidden-xs" style="width: 200px;">
                                             <b>Category URL</b>
                                         </td>
-                                        <td style="text-align: right; width: 150px;">
+                                        <td style="text-align: center; width: 200px;">
                                             <b>Category status</b>
                                         </td>
                                     </tr>
@@ -62,8 +62,8 @@
                                             <td class="hidden-xs" style="width: 200px;">
                                                     ${item.categoryUrl}
                                             </td>
-                                            <td style="text-align: right; width: 150px;">
-                                                ${item.categoryStatus? "ACTIVE" : "NON-ACTIVE"}
+                                            <td style="text-align: center; width: 150px;">
+                                                ${item.categoryStatus? "Active" : "Non-active"}
                                             </td>
 
                                             <td style="text-align: center; width: 150px;">

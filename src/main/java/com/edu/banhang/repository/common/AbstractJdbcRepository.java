@@ -108,10 +108,10 @@ public abstract class AbstractJdbcRepository<T extends BaseModel, ID extends Ser
         updater.mapColumns(arg0, columns);
 
         //Case update
-        if (arg0.getId() != null) {
+        if (arg0.getId() != null && exists((ID)arg0.getId())) {
             String updateQuery = String.format("update %s set ", this.tableName);
-
-            Object[] obj = new Object[columns.size()];
+            columns.remove(this.idColumn);
+            Object[] obj = new Object[columns.size() + 1];
             int i = 0;
 
             String separator = "";
@@ -121,7 +121,7 @@ public abstract class AbstractJdbcRepository<T extends BaseModel, ID extends Ser
                 separator = ", ";
             }
 
-            obj[i++] = arg0.getId();
+            obj[i] = arg0.getId();
 
             updateQuery += String.format(" where %s = ? ", this.idColumn);
 
@@ -196,8 +196,12 @@ public abstract class AbstractJdbcRepository<T extends BaseModel, ID extends Ser
                 .append(pageable.getPageSize())
                 .append(" ");
         long count = count();
+        int totalPages = (int) count / pageable.getPageSize();
+        if (totalPages*pageable.getPageSize() != count) {
+            totalPages += 1;
+        }
         return new JdbcPage<T>(pageable,
-                (int) count / pageable.getPageSize(),
+                totalPages,
                 (int) count,
                 jdbcTemplate.query(qu.toString(), this.rowMapper));
     }

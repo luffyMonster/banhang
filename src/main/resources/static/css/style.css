@@ -2203,6 +2203,13 @@ a {
     color: red;
 }
 
+.add-to-cart{
+    float: right;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    border-radius: 7px;
+}
+
 .alert {
     padding: 20px;
     background-color: #f44336;

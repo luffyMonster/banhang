@@ -5,16 +5,19 @@ import com.edu.banhang.model.Product;
 import com.edu.banhang.service.CategoryService;
 import com.edu.banhang.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -62,11 +65,18 @@ public class ProductManagerController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(ModelMap mm, Product product) {
+    public String save(@RequestParam("attachment") MultipartFile file, @Valid Product product, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (product.getCategory() == null || product.getCategory().getId() == -1) {
+            bindingResult.addError(new ObjectError("category", "*Please select a category"));
+        }
+        if (bindingResult.hasErrors()) {
+            return "admin/product-form";
+        }
         productService.save(product);
-        mm.put("product", product);
-        mm.put("listCategory", categoryService.getAll());
-        return "admin/product-form";
+        redirectAttributes.addFlashAttribute("product", product);
+        redirectAttributes.addFlashAttribute("listCategory", categoryService.getAll());
+        redirectAttributes.addFlashAttribute("successMessage", "Operation successfully!");
+        return "redirect:/admin/product/edit/" + product.getId();
     }
 
     @RequestMapping(value = "remove/{productId}", method = RequestMethod.GET)

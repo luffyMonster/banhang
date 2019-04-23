@@ -9,7 +9,7 @@
             </div>
             <div class="col_1_of_footer-top span_1_of_footer-top">
                 <ul class="f_list">
-                    <li><img src="<c:url value='/images/f_icon1.' />" alt=""/><span class="delivery">Customer Service :<span class="orange"> (800) 000-2587 (freephone)</span></span></li>
+                    <li><img src="<c:url value='/images/f_icon1.png' />" alt=""/><span class="delivery">Customer Service :<span class="orange"> (800) 000-2587 (freephone)</span></span></li>
                 </ul>
             </div>
             <div class="col_1_of_footer-top span_1_of_footer-top">

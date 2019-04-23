@@ -1,6 +1,7 @@
 package com.edu.banhang.controller;
 
 import com.edu.banhang.model.*;
+import com.edu.banhang.service.CategoryService;
 import com.edu.banhang.service.ProductService;
 import com.edu.banhang.service.ReceiptItemService;
 import com.edu.banhang.service.ReceiptService;
@@ -32,11 +33,14 @@ public class ShoppingCartController {
 
     ReceiptItemService receiptItemService;
 
+    CategoryService categoryService;
+
     @Autowired
-    public ShoppingCartController(ProductService productService, ReceiptService receiptService, ReceiptItemService receiptItemService) {
+    public ShoppingCartController(ProductService productService, ReceiptService receiptService, ReceiptItemService receiptItemService, CategoryService categoryService) {
         this.productService = productService;
         this.receiptService = receiptService;
         this.receiptItemService = receiptItemService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/checkout")
@@ -44,18 +48,20 @@ public class ShoppingCartController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("checkout");
         modelAndView.addObject("checkOutBean", new CheckOutBean());
+        modelAndView.addObject("listCategory", categoryService.getAll());
         return modelAndView;
     }
 
     @RequestMapping(value = "/checkout", method = RequestMethod.POST)
     public String checkOutStep2(ModelMap mm, HttpSession session, @Valid CheckOutBean checkOutBean, BindingResult bindingResult) {
+        mm.addAttribute("listCategory", categoryService.getAll());
         if (bindingResult.hasErrors()) {
             return "checkout";
         }
         HashMap<Long, Cart> cartItems = (HashMap<Long, Cart>) session.getAttribute("myCartItems");
         if (cartItems == null || cartItems.isEmpty()) {
             mm.addAttribute("errorMessage", "Can not check out when your cart is empty.");
-            return "redirect:/cart";
+            return "forward:/cart";
         }
         Receipt receipt = new Receipt();
         receipt.setReceiptName(checkOutBean.getFullName());
@@ -83,12 +89,12 @@ public class ShoppingCartController {
     }
 
     @GetMapping("")
-    public String viewCart(HttpSession session) {
+    public String viewCart(HttpSession session, ModelMap mm) {
         HashMap<Long, Cart> cartItems = (HashMap<Long, Cart>) session.getAttribute("myCartItems");
         if (cartItems == null) {
             cartItems = new HashMap<>();
         }
-
+        mm.addAttribute("listCategory", categoryService.getAll());
         session.setAttribute("myCartItems", cartItems);
         session.setAttribute("myCartTotal", totalPrice(cartItems));
         session.setAttribute("myCartNum", cartItems.size());
@@ -132,7 +138,7 @@ public class ShoppingCartController {
         session.setAttribute("myCartItems", cartItems);
         session.setAttribute("myCartTotal", totalPrice(cartItems));
         session.setAttribute("myCartNum", cartItems.size());
-        return "cart";
+        return "redirect:/cart";
     }
 
 

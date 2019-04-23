@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class Product extends BaseModel {
@@ -23,13 +24,13 @@ public class Product extends BaseModel {
 
     private String description;
 
-    @Min(value = 0, message = "*Quantity has to be non negative number")
     private Integer quantity;
 
+    @NotNull
     @DecimalMin(value = "0.00", message = "*Price has to be non negative number")
     private BigDecimal price;
 
-    @NotEmpty(message = "Image must be provided")
+    @NotEmpty
     private String imageUrl;
 
     public String getName() {

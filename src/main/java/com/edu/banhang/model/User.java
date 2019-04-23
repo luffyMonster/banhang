@@ -8,8 +8,8 @@ import java.util.Collection;
 
 public class User extends BaseModel{
 
-    @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
+    @Email
+    @NotEmpty
     private String email;
 
     @Length(min = 5, message = "*Your password must have at least 5 characters")

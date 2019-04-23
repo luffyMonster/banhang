@@ -27,6 +27,7 @@ public class JDBCReceiptRepository extends AbstractJdbcRepository<Receipt, Long>
             receipt.setReceiptAddress(resultSet.getString(RECEIPT_ADDRESS));
             receipt.setReceiptName(resultSet.getString(RECEIPT_NAME));
             receipt.setListReceiptItem(new ArrayList<>());
+            receipt.setPhoneNumber(resultSet.getString(RECEIPT_PHONE_NUMBER));
             return receipt;
         };
 
@@ -36,6 +37,7 @@ public class JDBCReceiptRepository extends AbstractJdbcRepository<Receipt, Long>
             mapping.put(RECEIPT_DATE, receipt.getReceiptDate());
             mapping.put(RECEIPT_ADDRESS, receipt.getReceiptAddress());
             mapping.put(RECEIPT_NAME, receipt.getReceiptName());
+            mapping.put(RECEIPT_PHONE_NUMBER, receipt.getPhoneNumber());
         };
         afterPropertiesSet();
     }
@@ -54,7 +56,7 @@ public class JDBCReceiptRepository extends AbstractJdbcRepository<Receipt, Long>
     }
 
     private int countItemByDate(Date date) {
-        String sql = "SELECT count(*) FROM receipt WHERE DATE_FORMAT(" + RECEIPT_DATE + ",'%Y-%m-%d') = DATE_FORMAT(?, '%Y-%m-%d')";
+        String sql = "SELECT count(*) FROM " + RECEIPT + " WHERE DATE_FORMAT(" + RECEIPT_DATE + ",'%Y-%m-%d') = DATE_FORMAT(?, '%Y-%m-%d')";
         Integer count = jdbcTemplate.queryForObject(sql, new Object[]{date}, Integer.class);
         return count == null ? 0 : count;
     }

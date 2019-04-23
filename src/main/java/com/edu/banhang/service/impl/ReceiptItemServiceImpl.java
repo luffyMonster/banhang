@@ -1,6 +1,7 @@
 package com.edu.banhang.service.impl;
 
 import com.edu.banhang.model.ReceiptItem;
+import com.edu.banhang.repository.ProductRepository;
 import com.edu.banhang.repository.ReceiptItemRepository;
 import com.edu.banhang.service.ReceiptItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,14 @@ public class ReceiptItemServiceImpl implements ReceiptItemService {
     @Autowired
     private ReceiptItemRepository receiptItemRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     public ReceiptItem save(ReceiptItem object) {
-        return receiptItemRepository.save(object);
+        ReceiptItem item = receiptItemRepository.save(object);
+        item.setProduct(productRepository.findOne(item.getProduct().getId()));
+        return item;
     }
 
     @Override
@@ -26,11 +32,15 @@ public class ReceiptItemServiceImpl implements ReceiptItemService {
 
     @Override
     public ReceiptItem findById(long receiptItemId) {
-        return receiptItemRepository.findOne(receiptItemId);
+        ReceiptItem item = receiptItemRepository.findOne(receiptItemId);
+        item.setProduct(productRepository.findOne(item.getProduct().getId()));
+        return item;
     }
 
     @Override
     public List<ReceiptItem> getListByReceipt(long receiptId) {
-        return receiptItemRepository.getListByReceipt(receiptId);
+        List<ReceiptItem> itemList = receiptItemRepository.getListByReceipt(receiptId);
+        itemList.forEach(item -> item.setProduct(productRepository.findOne(item.getProduct().getId())));
+        return itemList;
     }
 }

@@ -18,6 +18,7 @@
                     <jsp:include page="header.jsp"></jsp:include>
 
                         <div class="inner-block">
+                            <h2>Report Receipt</h2>
                             <div class="chit-chat-layer1">
                                 <div class="col-md-6 chit-chat-layer1-left">
                                     <div class="glocy-chart">

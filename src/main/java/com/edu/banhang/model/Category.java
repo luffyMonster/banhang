@@ -1,12 +1,17 @@
 package com.edu.banhang.model;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
 public class Category extends BaseModel implements Serializable {
 
+    @NotEmpty
     private String categoryName;
+
+    @NotEmpty
     private String categoryUrl;
+
     private boolean categoryStatus;
     private List<Product> listProduct;
 

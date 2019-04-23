@@ -88,9 +88,17 @@
             <li><a href="#">3</a></li>
             <li><a href="#">4</a></li>
         </ul>
-        <a class="wmuSliderPrev">Previous</a><a class="wmuSliderNext">Next</a><ul class="wmuSliderPagination"><li><a href="#" class="wmuActive">0</a></li><li><a href="#" class="">1</a></li><li><a href="#" class="">2</a></li><li><a href="#" class="">3</a></li><li><a href="#" class="">4</a></li></ul></div>
-    <script src="js/jquery.wmuSlider.js"></script>
-    <script type="text/javascript" src="js/modernizr.custom.min.js"></script>
+        <a class="wmuSliderPrev">Previous</a><a class="wmuSliderNext">Next</a>
+        <ul class="wmuSliderPagination">
+            <li><a href="#" class="wmuActive">0</a></li>
+            <li><a href="#" class="">1</a></li>
+            <li><a href="#" class="">2</a></li>
+            <li><a href="#" class="">3</a></li>
+            <li><a href="#" class="">4</a></li>
+        </ul>
+    </div>
+    <script src="<c:url value="/js/jquery.wmuSlider.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/js/modernizr.custom.min.js" />"></script>
     <script>
         $('.example1').wmuSlider();
     </script>

@@ -47,6 +47,9 @@
                                         <td class="hidden-xs">
                                             <b>Product</b>
                                         </td>
+                                        <td class="hidden-xs">
+                                            <b>Image</b>
+                                        </td>
                                         <td class="hidden-xs" style="width: 200px;">
                                             <b>Category</b>
                                         </td>
@@ -65,8 +68,11 @@
                                             <td class="hidden-xs">
                                                     ${item.name}
                                             </td>
+                                            <td class="hidden-xs" style="width: 200px">
+                                                <img src="<c:url value="${item.imageUrl}" /> " width="40">
+                                            </td>
                                             <td class="hidden-xs" style="width: 200px;">
-                                                    ${item.category.name}
+                                                    ${item.category.categoryName}
                                             </td>
                                             <td style="text-align: right; width: 150px;">
                                                 $${item.price}
@@ -89,13 +95,13 @@
                 </div>
             </div>
 
-            <jsp:include page="footer.jsp"></jsp:include>
+            <jsp:include page="footer.jsp" />
 
         </div>
 
     </div>
 
-    <jsp:include page="navigation.jsp"></jsp:include>
+    <jsp:include page="navigation.jsp" />
 
 </div>
 

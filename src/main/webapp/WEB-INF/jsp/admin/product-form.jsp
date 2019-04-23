@@ -20,45 +20,57 @@
             <div class="inner-block">
                 <div class="inbox">
                     <h2>Product Details</h2>
+                    <c:if test="${successMessage != null}">
+                        <div class="alert alert-success">
+                                ${successMessage}
+                        </div>
+                    </c:if>
+                    <c:if test="${errorMessage != null}">
+                        <div class="alert alert-danger">
+                                ${errorMessage}
+                        </div>
+                    </c:if>
                     <div class="col-md-12 compose-right">
                         <div class="inbox-details-default">
                             <div class="inbox-details-heading">
                                 ${product.name}
                             </div>
                             <div class="inbox-details-body">
-                                <c:if test="${successMessage != null}">
-                                    <div class="alert alert-info">
-                                            ${successMessage}
-                                    </div>
-                                </c:if>
-                                <c:if test="${errorMessage != null}">
-                                    <div class="alert alert-danger">
-                                            ${errorMessage}
-                                    </div>
-                                </c:if>
                                 <c:url value="/admin/product/save" var="saveUrl"/>
                                 <form:form method="POST" modelAttribute="product" action="${saveUrl}"
-                                           cssClass="com-mail">
-                                    <label>Category</label>
+                                           cssClass="com-mail" enctype="multipart/form-data">
+                                    <label>Category*</label>
+                                    <form:hidden path="id"/>
                                     <form:select path="category.id">
                                         <option value="-1">Select a type</option>
                                         <c:forEach var="c" items="${listCategory}">
                                             <option value="${c.id}" ${product.category.id == c.id ? 'selected=""' : ''}>${c.categoryName}</option>
                                         </c:forEach>
                                     </form:select><br/>
-                                    <label>Name</label>
-                                    <form:input path="name"/>
-                                    <label>Price</label>
-                                    <form:input path="price"/>
-                                    <%--<label>Sale</label>--%>
-                                    <%--<form:input path="productSale" />--%>
-                                    <label>Description</label>
-                                    <form:textarea path="description"/>
+                                    <div class="form-group">
+                                        <label>Name *</label>
+                                        <form:input path="name"/>
+                                        <form:errors path="name" cssClass="error"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Price*</label>
+                                        <form:input path="price"/>
+                                        <form:errors path="price" cssClass="error"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <form:textarea path="description"/>
+                                        <form:errors path="description" cssClass="error"/>
+                                    </div>
                                     <div class="form-group">
                                         <div class="btn btn-default btn-file">
                                             <i class="fa fa-paperclip"> </i> Attachment
                                             <input type="file" name="attachment">
+                                            <form:hidden path="imageUrl"/>
                                         </div>
+
+                                        <img src="<c:url value="${product.imageUrl}" /> " alt="" height="40"/>
+                                        <form:errors path="imageUrl" cssClass="error"/>
                                     </div>
                                     <input type="submit" value="Save">
                                 </form:form>

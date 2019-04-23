@@ -19,33 +19,41 @@
 
             <div class="inner-block">
                 <div class="inbox">
-                    <h2>Product Details</h2>
+                    <h2>Category Manager</h2>
+                    <c:if test="${successMessage != null}">
+                        <div class="alert alert-info">
+                                ${successMessage}
+                        </div>
+                    </c:if>
+                    <c:if test="${errorMessage != null}">
+                        <div class="alert alert-danger">
+                                ${errorMessage}
+                        </div>
+                    </c:if>
                     <div class="col-md-12 compose-right">
                         <div class="inbox-details-default">
                             <div class="inbox-details-heading">
-                                ${category.name}
+                                ${category.categoryName}
                             </div>
                             <div class="inbox-details-body">
-                                <c:if test="${successMessage != null}">
-                                    <div class="alert alert-info">
-                                            ${successMessage}
-                                    </div>
-                                </c:if>
-                                <c:if test="${errorMessage != null}">
-                                    <div class="alert alert-danger">
-                                            ${errorMessage}
-                                    </div>
-                                </c:if>
                                 <c:url value="/admin/category/save" var="saveUrl"/>
                                 <form:form method="POST" modelAttribute="category" action="${saveUrl}"
                                            cssClass="com-mail">
-                                    <label>Name</label>
-                                    <form:input path="categoryName"/>
-                                    <label>Category URL</label>
-                                    <form:input path="categoryUrl"/>
-                                    <label>Category Status</label>
-                                    ${category.categoryStatus?"ACTIVE":"NON-ACTIVE"}
-                                    <form:hidden path="categoryStatus" />
+                                    <div class="form-group">
+                                        <label>Name *</label>
+                                        <form:input path="categoryName"/>
+                                        <form:errors path="categoryName" cssClass="error"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Category URL *</label>
+                                        <form:input path="categoryUrl"/>
+                                        <form:errors path="categoryUrl" cssClass="error"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Category Status</label>
+                                            ${category.categoryStatus?"Active":"Non-active"}
+                                        <form:hidden path="categoryStatus"/>
+                                    </div>
                                     <input type="submit" value="Save">
                                 </form:form>
                             </div>

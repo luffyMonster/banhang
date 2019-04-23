@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Category manager</title>
+    <title>Order manager</title>
 </head>
 <body>
 
@@ -19,7 +19,7 @@
 
             <div class="inner-block">
                 <div class="inbox">
-                    <h2>Product Manage</h2>
+                    <h2>Order manager</h2>
                     <div class="col-md-12 mailbox-content  tab-content tab-content-in">
                         <div class="tab-pane active text-style" id="tab1">
                             <div class="mailbox-border">
@@ -52,45 +52,45 @@
                                         <td class="hidden-xs">
                                             <b>Receipt Name</b>
                                         </td>
-                                        <td class="hidden-xs" style="width: 200px;">
-                                            <b>Receipt phone number</b>
+                                        <td class="hidden-xs" style="text-align: center;width: 200px;">
+                                            <b>Receipt phone</b>
                                         </td>
-                                        <td style="text-align: right; width: 150px;">
+                                        <td style="text-align: center; width: 200px;">
                                             <b>Receipt address</b>
                                         </td>
-                                        <td style="text-align: right; width: 150px;">
+                                        <td style="text-align: center; width: 200px;">
                                             <b>Receipt date</b>
                                         </td>
-                                        <td style="text-align: right; width: 150px;">
+                                        <td style="text-align: center; width: 200px;">
                                             <b>Order status</b>
                                         </td>
-                                        <td style="text-align: right; width: 150px;">
+                                        <td style="text-align: center; width: 200px;">
                                             <b>Option</b>
                                         </td>
                                     </tr>
                                     <c:forEach var="item" items="${listReceipt}">
                                         <tr class="unread checked">
-                                            <td class="hidden-xs">
+                                            <td class="hidden-xs" style="width: 200px;">
                                                     ${item.receiptName}
                                             </td>
-                                            <td class="hidden-xs" style="width: 200px;">
+                                            <td class="hidden-xs" style="text-align: center;width: 200px;">
                                                     ${item.phoneNumber}
                                             </td>
-                                            <td class="hidden-xs" style="width: 200px;">
+                                            <td class="hidden-xs" style="text-align: center;width: 200px;">
                                                     ${item.receiptAddress}
                                             </td>
-                                            <td style="text-align: right; width: 150px;">
+                                            <td style="text-align: center; width: 200px;">
                                                 <fmt:formatDate type = "both"
                                                                 dateStyle = "short" timeStyle = "short" value = "${item.receiptDate}" />
                                             </td>
-                                            <td class="hidden-xs" style="width: 200px;">
+                                            <td class="hidden-xs" style="text-align: center; width: 200px;">
                                                     ${item.receiptStatus?"Confirmed":"Waiting"}
                                             </td>
 
                                             <td style="text-align: center; width: 150px;">
-                                                <a class="btn btn-default" href="<c:url value="/admin/order/items/${item.id}" /> ">View Items</a>
+                                                <a class="btn btn-default" href="<c:url value="/admin/order/details/${item.id}" /> ">Details</a>
                                                 <c:if test="${!item.receiptStatus}">
-                                                <a class="btn btn-default" href="<c:url value="/admin/order/confirm/${item.id}?page=${actualPage}" /> ">Confirm Order</a>
+                                                <a class="btn btn-default" href="<c:url value="/admin/order/confirm/${item.id}?page=${actualPage}" /> ">Confirm</a>
                                                 </c:if>
                                             </td>
                                         </tr>

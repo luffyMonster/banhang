@@ -2,6 +2,7 @@ package com.edu.banhang.controller;
 
 import com.edu.banhang.model.MyItem;
 import com.edu.banhang.service.ReportService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +18,14 @@ public class ManagerController {
 
     private ReportService reportService;
 
-
+    @Autowired
+    public ManagerController(ReportService reportService) {
+        this.reportService = reportService;
+    }
 
     @GetMapping(value = "/home")
     public String adminHome() {
-        return "redirect:/admin/product/list";
+        return "forward:/admin/product/list";
     }
 
     @RequestMapping(value = "/report/receipt", method = RequestMethod.GET)

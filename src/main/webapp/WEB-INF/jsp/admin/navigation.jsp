@@ -14,10 +14,10 @@
                 </a> </div>
             <div class="menu">
                 <ul id="menu" >
-                    <li><a href="<c:url value="/admin/category/list"/>"><i class="fa fa-tags"></i><span>Category</span></a></li>
-                    <li><a href="<c:url value="/admin/product/list" />"><i class="fa fa-copy"></i><span>Product</span></a></li>
-                    <li><a href="<c:url value="/admin/order/list" />"><i class="fa fa-opencart"></i><span>Order</span></a></li>
-                    <li><a href="<c:url value="/admin/report/receipt" /> "><i class="fa fa-bar-chart"></i><span>Report</span></a></li>
+                    <li><a href="<c:url value="/admin/category/list"/>" title="Category"><i class="fa fa-tags"></i><span>Category</span></a></li>
+                    <li><a href="<c:url value="/admin/product/list" />" title="Product"><i class="fa fa-copy"></i><span>Product</span></a></li>
+                    <li><a href="<c:url value="/admin/order/list" />"   title="Order"><i class="fa fa-opencart"></i><span>Order</span></a></li>
+                    <li><a href="<c:url value="/admin/report/receipt" />" title="Report"><i class="fa fa-bar-chart"></i><span>Report</span></a></li>
                 </ul>
             </div>
         </div>
