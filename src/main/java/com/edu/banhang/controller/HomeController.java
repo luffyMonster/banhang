@@ -1,6 +1,7 @@
 package com.edu.banhang.controller;
 
 import com.edu.banhang.model.Product;
+import com.edu.banhang.service.CategoryService;
 import com.edu.banhang.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +26,17 @@ import static com.edu.banhang.constant.DBConstants.PRODUCT_NAME;
 public class HomeController {
 
     private final ProductService productService;
+    private final CategoryService categoryService;
+
 
     @Value("${app.home.size-per-page}")
     private int sizePerPerPage;
     private static final int INITIAL_PAGE = 0;
 
     @Autowired
-    public HomeController(ProductService productService) {
+    public HomeController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     @RequestMapping({"/", "/home"})
@@ -51,6 +55,7 @@ public class HomeController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("products", products);
+        modelAndView.addObject("listCategory", categoryService.getAll());
         modelAndView.setViewName("index");
         return modelAndView;
     }

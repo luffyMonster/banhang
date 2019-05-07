@@ -580,6 +580,36 @@ ul.list li img {
     margin: 0 0px 0 18%;
 }
 
+ul.list-nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.list-nav li {
+    font: 200 1em/1.5 Helvetica, Verdana, sans-serif;
+    border-bottom: 1px solid #ccc;
+    margin-top: 5px;
+}
+.list-nav li:last-child {
+    border-bottom: none;
+}
+
+.list-nav li a {
+    text-decoration: none;
+    color: #000;
+    display: block;
+    -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+    transition: font-size 0.3s ease, background-color 0.3s ease;
+    padding-left: 5px;
+}
+.list-nav li a:hover {
+    font-size: 1.1em;
+    background: #f6f6f6;
+}
+
 .top_box .css3 img {
     -webkit-transition-duration: 0.5s;
     /* Webkit: Animation duration; */
@@ -1669,7 +1699,6 @@ p.code {
 .mens-toolbar .pager {
     padding: 5px 8px 3px 8px;
     float: right;
-    width: 26.5%;
 }
 
 .pager .limiter {
@@ -2208,6 +2237,16 @@ a {
     margin-right: 2px;
     margin-bottom: 2px;
     border-radius: 7px;
+    padding: 5px 3px;
+    text-transform: uppercase;
+}
+.add-to-cart a{
+    color: #fff;
+    font-size: 0.85em;
+}
+.add-to-cart a:hover{
+    color: #fff;
+    text-decoration: none;
 }
 
 .alert {
@@ -2651,7 +2690,7 @@ img {
 
     .list {
         width: 48.5%;
-        padding: 0;
+        padding: 4px 2px;
     }
 
     ul.list li img {
@@ -2821,7 +2860,7 @@ img {
 
     .list {
         width: 48.5%;
-        padding: 0;
+        padding: 5px 0;
     }
 
     ul.list li img {
@@ -3039,7 +3078,7 @@ img {
 
     .list {
         width: 48.5%;
-        padding: 0;
+        padding: 5px 0;
     }
 
     ul.list li img {
@@ -3275,7 +3314,7 @@ img {
 
     .list {
         width: 48.5%;
-        padding: 0;
+        padding: 5px 0;
     }
 
     ul.list li img {
@@ -3594,7 +3633,7 @@ img {
 
     .list {
         width: 48.5%;
-        padding: 0;
+        padding: 5px 0;
     }
 
     ul.list li img {
@@ -3948,7 +3987,7 @@ img {
 
     .list {
         width: 48.5%;
-        padding: 0;
+        padding: 5px 0;
     }
 
     ul.list li img {

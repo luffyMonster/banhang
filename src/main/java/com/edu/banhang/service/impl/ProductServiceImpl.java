@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -51,4 +53,11 @@ public class ProductServiceImpl implements ProductService {
     public void delete(long productId) {
         productRepository.delete(productId);
     }
+
+    @Override
+    public Page<Product> getProductByCategory(Long categoryId, Pageable pageable) {
+        return productRepository.getProductByCategory(categoryId, pageable);
+    }
+
+
 }

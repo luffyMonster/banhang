@@ -1,6 +1,7 @@
 package com.edu.banhang.controller;
 
 import com.edu.banhang.model.User;
+import com.edu.banhang.service.CategoryService;
 import com.edu.banhang.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +18,12 @@ import javax.validation.Valid;
 public class RegistrationController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     private final UserService userService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public RegistrationController(UserService userService) {
+    public RegistrationController(UserService userService, CategoryService categoryService) {
         this.userService = userService;
+        this.categoryService = categoryService;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -29,6 +32,7 @@ public class RegistrationController {
         User user = new User();
         modelAndView.addObject("user", user);
         modelAndView.setViewName("register");
+        modelAndView.addObject("listCategory", categoryService.getAll());
         return modelAndView;
     }
 
@@ -45,6 +49,7 @@ public class RegistrationController {
                             "There is already a user registered with the username provided");
         }
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("listCategory", categoryService.getAll());
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("register");

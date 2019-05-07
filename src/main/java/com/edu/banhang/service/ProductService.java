@@ -16,4 +16,6 @@ public interface ProductService {
 
     void delete(long productId);
 
+    Page<Product> getProductByCategory(Long categoryId, Pageable pageable);
+
 }

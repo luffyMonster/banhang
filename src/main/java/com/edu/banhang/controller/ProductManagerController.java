@@ -42,7 +42,7 @@ public class ProductManagerController {
     @RequestMapping(value = "/list/{page}")
     public String viewProductList(ModelMap mm, @PathVariable Optional<Integer> page) {
         int evalPage = (page.orElse(0) < 1) ? 0 : page.get() - 1;
-        PageRequest pageable = new PageRequest(evalPage, 10);
+        PageRequest pageable = new PageRequest(evalPage, 9);
         Page<Product> productPage = productService.findAll(pageable);
         mm.put("listProduct", productPage.getContent());
         mm.put("totalPage", productPage.getTotalPages());
