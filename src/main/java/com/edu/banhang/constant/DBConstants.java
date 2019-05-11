@@ -40,4 +40,10 @@ public interface DBConstants {
     String CATEGORY_NAME = "CATEGORY_NAME";
     String CATEGORY_URL = "CATEGORY_URL";
     String CATEGORY_STATUS = "CATEGORY_STATUS";
+
+    String COMMENT = "COMMENT";
+    String COMMENT_ID = "COMMENT_ID";
+    String COMMENT_DATE = "COMMENT_DATE";
+    String COMMENT_USER_NAME = "COMMENT_USER_NAME";
+    String COMMENT_DESC = "COMMENT_DESC";
 }

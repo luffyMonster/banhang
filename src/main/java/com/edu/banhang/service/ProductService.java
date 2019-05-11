@@ -18,4 +18,8 @@ public interface ProductService {
 
     Page<Product> getProductByCategory(Long categoryId, Pageable pageable);
 
+    List<Product> getListProductToShowBanner();
+
+    Page<Product> findProductByName(String name, Pageable pageable);
+
 }

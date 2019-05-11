@@ -1,100 +1,29 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: To Nghia
-  Date: 4/14/2019
-  Time: 4:23 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="index-banner">
-    <div class="wmuSlider example1" style="height: 560px;">
+    <div class="wmuSlider example1" style="height: 220px">
         <div class="wmuSliderWrapper">
-            <article style="position: relative; width: 100%; opacity: 1;">
-                <div class="banner-wrap">
-                    <div class="slider-left">
-                        <img src="images/banner1.jpg" alt=""/>
+            <c:forEach var="product" items="${listBanner}">
+                <article style="position: relative; width: 100%; opacity: 1;">
+                    <div class="banner-wrap">
+                        <div class="slider-left" style="display: flex; height: 100%; align-items: center">
+                            <img src="<c:url value="${product.imageUrl}" /> " alt="${product.name}" />
+                        </div>
+                        <div class="slider-right"  >
+                            <h2>${product.category.categoryName}</h2>
+                            <p>${product.name}</p>
+                            <div class="btn"><a href="<c:url value="/category/${product.category.categoryUrl}/${product.category.id}" />">Shop Now</a></div>
+                        </div>
+                        <div class="clear"></div>
                     </div>
-                    <div class="slider-right">
-                        <h1>Classic</h1>
-                        <h2>White</h2>
-                        <p>Lorem ipsum dolor sit amet</p>
-                        <div class="btn"><a href="shop.html">Shop Now</a></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </article>
-            <article style="position: absolute; width: 100%; opacity: 0;">
-                <div class="banner-wrap">
-                    <div class="slider-left">
-                        <img src="images/banner2.jpg" alt=""/>
-                    </div>
-                    <div class="slider-right">
-                        <h1>Classic</h1>
-                        <h2>White</h2>
-                        <p>Lorem ipsum dolor sit amet</p>
-                        <div class="btn"><a href="shop.html">Shop Now</a></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </article>
-            <article style="position: absolute; width: 100%; opacity: 0;">
-                <div class="banner-wrap">
-                    <div class="slider-left">
-                        <img src="images/banner1.jpg" alt=""/>
-                    </div>
-                    <div class="slider-right">
-                        <h1>Classic</h1>
-                        <h2>White</h2>
-                        <p>Lorem ipsum dolor sit amet</p>
-                        <div class="btn"><a href="shop.html">Shop Now</a></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </article>
-            <article style="position: absolute; width: 100%; opacity: 0;">
-                <div class="banner-wrap">
-                    <div class="slider-left">
-                        <img src="images/banner2.jpg" alt=""/>
-                    </div>
-                    <div class="slider-right">
-                        <h1>Classic</h1>
-                        <h2>White</h2>
-                        <p>Lorem ipsum dolor sit amet</p>
-                        <div class="btn"><a href="shop.html">Shop Now</a></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </article>
-            <article style="position: absolute; width: 100%; opacity: 0;">
-                <div class="banner-wrap">
-                    <div class="slider-left">
-                        <img src="images/banner1.jpg" alt=""/>
-                    </div>
-                    <div class="slider-right">
-                        <h1>Classic</h1>
-                        <h2>White</h2>
-                        <p>Lorem ipsum dolor sit amet</p>
-                        <div class="btn"><a href="shop.html">Shop Now</a></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </article>
+                </article>
+            </c:forEach>
         </div>
         <a class="wmuSliderPrev">Previous</a><a class="wmuSliderNext">Next</a>
         <ul class="wmuSliderPagination">
-            <li><a href="#" class="">0</a></li>
-            <li><a href="#" class="">1</a></li>
-            <li><a href="#" class="wmuActive">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-        </ul>
-        <a class="wmuSliderPrev">Previous</a><a class="wmuSliderNext">Next</a>
-        <ul class="wmuSliderPagination">
-            <li><a href="#" class="wmuActive">0</a></li>
-            <li><a href="#" class="">1</a></li>
-            <li><a href="#" class="">2</a></li>
-            <li><a href="#" class="">3</a></li>
-            <li><a href="#" class="">4</a></li>
+            <c:forEach var="product" items="${listBanner}" varStatus="loop">
+                <li><a href="#" class="<c:if  test="${loop.first}" >wmuActive</c:if>">${loop.index}</a></li>
+            </c:forEach>
         </ul>
     </div>
     <script src="<c:url value="/js/jquery.wmuSlider.js" />"></script>

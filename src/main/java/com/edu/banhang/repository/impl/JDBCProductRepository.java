@@ -54,6 +54,54 @@ public class JDBCProductRepository extends AbstractJdbcRepository<Product, Long>
         String sql = "select * from " + PRODUCT + " where " + CATEGORY_ID + " = ?";
         final StringBuilder qu = new StringBuilder(sql);
 
+        appendSort(pageable, qu);
+
+        qu
+                .append(" limit ")
+                .append(pageable.getOffset())
+                .append(", ")
+                .append(pageable.getPageSize())
+                .append(" ");
+        String sqlCount = "select count(*) from " + PRODUCT + " where " + CATEGORY_ID + " = ?";
+        Object[] params = new Object[]{categoryId};
+        long count = count(params, sqlCount);
+        int totalPages = (int) count / pageable.getPageSize();
+        if (totalPages*pageable.getPageSize() != count) {
+            totalPages += 1;
+        }
+        return new JdbcPage<>(pageable,
+                totalPages,
+                (int) count,
+                jdbcTemplate.query(qu.toString(), params, this.rowMapper));
+    }
+
+    @Override
+    public Page<Product> findProductByName(String name, Pageable pageable) {
+        String sql = "select * from " + PRODUCT + " where " + PRODUCT_NAME + " like concat('%', concat(?,'%'))" ;
+        final StringBuilder qu = new StringBuilder(sql);
+
+        appendSort(pageable, qu);
+
+        qu
+                .append(" limit ")
+                .append(pageable.getOffset())
+                .append(", ")
+                .append(pageable.getPageSize())
+                .append(" ");
+        Object[] params = new Object[]{name};
+        String sqlCount = "select count(*) from " + PRODUCT + " where " + PRODUCT_NAME + " like concat('%', concat(?,'%'))" ;
+        long count = count(params, sqlCount);
+        int totalPages = (int) count / pageable.getPageSize();
+        if (totalPages*pageable.getPageSize() != count) {
+            totalPages += 1;
+        }
+        return new JdbcPage<>(pageable,
+                totalPages,
+                (int) count,
+                jdbcTemplate.query(qu.toString(), params, this.rowMapper));
+    }
+
+    private void appendSort(Pageable pageable, StringBuilder qu) {
         Optional.ofNullable(pageable.getSort()).ifPresent(sort -> {
             String separator = " ";
             qu.append(" order by");
@@ -66,27 +114,10 @@ public class JDBCProductRepository extends AbstractJdbcRepository<Product, Long>
                 separator = ", ";
             }
         });
-
-        qu
-                .append(" limit ")
-                .append(pageable.getOffset())
-                .append(", ")
-                .append(pageable.getPageSize())
-                .append(" ");
-        long count = countByCategory(categoryId);
-        int totalPages = (int) count / pageable.getPageSize();
-        if (totalPages*pageable.getPageSize() != count) {
-            totalPages += 1;
-        }
-        Object[] params = new Object[]{categoryId};
-        return new JdbcPage<Product>(pageable,
-                totalPages,
-                (int) count,
-                jdbcTemplate.query(qu.toString(), params, this.rowMapper));
     }
-    private long countByCategory(Long categoryId) {
-        String sql = "select count(*) from " + PRODUCT + " where " + CATEGORY_ID + " = ?";
-        Long count = jdbcTemplate.queryForObject(sql, new Object[]{categoryId}, Long.class);
+
+    private long count(Object[] params, String sql) {
+        Long count = jdbcTemplate.queryForObject(sql, params, Long.class);
         return count == null ? 0 : count;
     }
 }

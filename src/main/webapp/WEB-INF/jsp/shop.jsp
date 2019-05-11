@@ -25,7 +25,9 @@
                 <div class="row row1 scroll-pane">
                     <ul class="list-nav">
                         <c:forEach var="item" items="${listCategory}" varStatus="loop">
-                            <li><a href="<c:url value="/category/${item.categoryUrl}/${item.id}" /> ">${item.categoryName}</a></li>
+                            <li>
+                                <a href="<c:url value="/category/${item.categoryUrl}/${item.id}" /> ">${item.categoryName}</a>
+                            </li>
                         </c:forEach>
                     </ul>
                 </div>
@@ -34,15 +36,28 @@
         <div class="cont span_2_of_3">
             <div class="mens-toolbar">
                 <div class="sort">
+                    ${navTitle}
                     ${category.categoryName}
                 </div>
                 <div class="pager">
                     <ul class="dc_pagination dc_paginationA dc_paginationA06">
                         <li>Pages</li>
-                        <c:forEach var="page" begin="1" end="${totalPage}">
-                            <li><a class="btn btn-default" href="<c:url value="/category/${category.categoryUrl}/${category.id}/${page}" />"><c:out
-                                    value="${page}"/></a></li>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${isSearchPage}">
+                                <c:forEach var="page" begin="1" end="${totalPage}">
+                                    <li><a class="btn btn-default"
+                                           href="<c:url value="/product/search?page=${page}&key=${keyword}" />"><c:out
+                                            value="${page}"/></a></li>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="page" begin="1" end="${totalPage}">
+                                    <li><a class="btn btn-default"
+                                           href="<c:url value="/category/${category.categoryUrl}/${category.id}/${page}" />"><c:out
+                                            value="${page}"/></a></li>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </ul>
                     <div class="clear"></div>
                 </div>

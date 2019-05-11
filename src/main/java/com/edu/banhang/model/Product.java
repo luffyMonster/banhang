@@ -30,7 +30,6 @@ public class Product extends BaseModel {
     @DecimalMin(value = "0.00", message = "*Price has to be non negative number")
     private BigDecimal price;
 
-    @NotEmpty
     private String imageUrl;
 
     public String getName() {

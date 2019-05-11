@@ -12,9 +12,11 @@
                     <li class="active"><a href="<c:url value='/login'/>">Log in</a></li>
                 </sec:authorize>
                 <li><a href="<c:url value='/shop'/>">Store Locator</a></li>
-                <li><a href="<c:url value='/cart/'/>">My Cart (${sessionScope.myCartNum == null ? 0 : sessionScope.myCartNum})</a></li>
+                <li><a href="<c:url value='/cart/'/>">My Cart
+                    (${sessionScope.myCartNum == null ? 0 : sessionScope.myCartNum})</a></li>
                 <sec:authorize access="isAuthenticated()">
-                    <li><a href="<c:url value='/logout'/>"><sec:authentication property="principal.username" />, logout!</a></li>
+                    <li><a href="<c:url value='/logout'/>"><sec:authentication property="principal.username"/>,
+                        logout!</a></li>
                 </sec:authorize>
             </ul>
         </div>

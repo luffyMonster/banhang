@@ -39,14 +39,17 @@
                                 <c:url value="/admin/product/save" var="saveUrl"/>
                                 <form:form method="POST" modelAttribute="product" action="${saveUrl}"
                                            cssClass="com-mail" enctype="multipart/form-data">
-                                    <label>Category*</label>
                                     <form:hidden path="id"/>
-                                    <form:select path="category.id">
-                                        <option value="-1">Select a type</option>
-                                        <c:forEach var="c" items="${listCategory}">
-                                            <option value="${c.id}" ${product.category.id == c.id ? 'selected=""' : ''}>${c.categoryName}</option>
-                                        </c:forEach>
-                                    </form:select><br/>
+                                    <div class="form-group">
+                                        <label>Category*</label>
+                                        <form:select path="category.id">
+                                            <option value="-1">Select a type</option>
+                                            <c:forEach var="c" items="${listCategory}">
+                                                <option value="${c.id}" ${product.category.id == c.id ? 'selected=""' : ''}>${c.categoryName}</option>
+                                            </c:forEach>
+                                        </form:select>
+                                        <form:errors path="category" cssClass="error"/>
+                                    </div>
                                     <div class="form-group">
                                         <label>Name *</label>
                                         <form:input path="name"/>
@@ -54,7 +57,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Price*</label>
-                                        <form:input path="price"/>
+                                        <form:input path="price" />
                                         <form:errors path="price" cssClass="error"/>
                                     </div>
                                     <div class="form-group">
@@ -65,12 +68,28 @@
                                     <div class="form-group">
                                         <div class="btn btn-default btn-file">
                                             <i class="fa fa-paperclip"> </i> Attachment
-                                            <input type="file" name="attachment">
+                                            <input type="file" name="attachment" id="chooser">
                                             <form:hidden path="imageUrl"/>
                                         </div>
 
-                                        <img src="<c:url value="${product.imageUrl}" /> " alt="" height="40"/>
+                                        <img src="<c:url value="${product.imageUrl}" /> " id="imgPreview" alt="" height="40"/>
                                         <form:errors path="imageUrl" cssClass="error"/>
+                                        <script>
+                                            function readURL(input) {
+                                                if (input.files && input.files[0]) {
+                                                    var reader = new FileReader();
+                                                    reader.onload = function(e) {
+                                                        $('#imgPreview').attr('src', e.target.result);
+                                                    };
+                                                    reader.readAsDataURL(input.files[0]);
+                                                }
+                                            }
+
+                                            $("#chooser").change(function() {
+                                                console.log("x");
+                                                readURL(this);
+                                            });
+                                        </script>
                                     </div>
                                     <input type="submit" value="Save">
                                 </form:form>

@@ -56,6 +56,7 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("products", products);
         modelAndView.addObject("listCategory", categoryService.getAll());
+        modelAndView.addObject("listBanner", productService.getListProductToShowBanner());
         modelAndView.setViewName("index");
         return modelAndView;
     }

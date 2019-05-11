@@ -77,7 +77,6 @@ a {
 .pos-relative {
     position: relative;
 }
-
 /* Position Relative */
 .pos-absolute {
     position: absolute;
@@ -284,7 +283,7 @@ body {
     z-index: 2;
     position: absolute;
     left: 83.5%;
-    bottom: 80px;
+    bottom: 4px;
 }
 
 .wmuSliderPagination li {
